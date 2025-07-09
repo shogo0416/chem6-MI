@@ -17,7 +17,7 @@
 
 /gun/position  0 0 0
 /gun/direction 0 0 1
-/gun/particle proton
+/gun/particle alpha
 
 # in order to reproduce LET values of NIST data
 # please see the spower example using stationary mode
