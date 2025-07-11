@@ -47,8 +47,14 @@
 #include "G4VModularPhysicsList.hh"
 #include "G4VUserChemistryList.hh"
 #include "globals.hh"
-class G4VPhysicsConstructor;
+#include "G4UImessenger.hh"
+#include "G4UIcmdWithAString.hh"
+#include "G4UIcmdWithABool.hh"
 
+class G4VPhysicsConstructor;
+class PhysicsListMessenger;
+
+//==============================================================================
 class PhysicsList : public G4VModularPhysicsList
 {
   public:
@@ -60,9 +66,55 @@ class PhysicsList : public G4VModularPhysicsList
 
     void RegisterConstructor(const G4String& name);
 
+    void SetMultipleIonisation(G4bool in);
+
+  private:
+    void ConstructMultipleIonisationProcess();
+
   private:
     std::unique_ptr<G4VPhysicsConstructor> fEmDNAPhysicsList;
     std::unique_ptr<G4VPhysicsConstructor> fEmDNAChemistryList;
     G4String fPhysDNAName;
+    G4bool fMIoni;
+    PhysicsListMessenger* pMessenger;
 };
+
+//------------------------------------------------------------------------------
+inline void PhysicsList::SetMultipleIonisation(G4bool in)
+{
+  fMIoni = in;
+}
+
+//==============================================================================
+class PhysicsListMessenger : public G4UImessenger {
+public:
+  //----------------------------------------------------------------------------
+  // constructor
+  PhysicsListMessenger(PhysicsList* plist)
+    : plist_{plist} {
+    mioni_cmd_ = new G4UIcmdWithABool("/physlist/multiple_ionisation", this);
+    mioni_cmd_->SetGuidance("Set multiple ionization processes");
+    mioni_cmd_->SetDefaultValue(false);
+  }
+
+  //----------------------------------------------------------------------------
+  // destructor
+  ~PhysicsListMessenger() override
+  {
+    if (mioni_cmd_) { delete mioni_cmd_; }
+  }
+
+  //----------------------------------------------------------------------------
+  void SetNewValue(G4UIcommand* cmd, G4String val) override
+  {
+    if (cmd == mioni_cmd_) {
+      plist_->SetMultipleIonisation(mioni_cmd_->GetNewBoolValue(val));
+    }
+  }
+
+private:
+  PhysicsList* plist_{nullptr};
+  G4UIcmdWithABool   *mioni_cmd_{nullptr};
+};
+
 #endif

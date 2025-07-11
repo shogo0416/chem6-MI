@@ -39,8 +39,8 @@ namespace MI {
 class DNABaseChemistry {
 public:
   DNABaseChemistry()
-    : use_alt_B1A1_decay_{false},
-      use_alt_decay_vibH2O_{false} {}
+    : use_alt_B1A1_decay_{true},
+      use_alt_decay_vibH2O_{true} {}
   ~DNABaseChemistry() = default;
   void UseAltB1A1Decay(bool in);
   void UseAltDecayVibH2O(bool in);

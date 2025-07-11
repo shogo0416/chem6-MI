@@ -57,22 +57,36 @@
 #include "G4EmDNAPhysics_option8.hh"
 #include "G4EmParameters.hh"
 #include "G4SystemOfUnits.hh"
+
+// multiple ionisation processes
+#include "G4DNADoubleIonisation.hh"
+#include "G4DNATripleIonisation.hh"
+#include "G4DNAQuadrupleIonisation.hh"
+#include "dna_chemistry.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PhysicsList::PhysicsList() : G4VModularPhysicsList()
+PhysicsList::PhysicsList()
+  : G4VModularPhysicsList(),
+    fMIoni{false}
 {
+  pMessenger = new PhysicsListMessenger(this);
   G4double currentDefaultCut = 0.001 * mm;
   G4ProductionCutsTable::GetProductionCutsTable()->SetEnergyRange(100 * eV, 1 * GeV);
   SetDefaultCutValue(currentDefaultCut);
   SetVerboseLevel(1);
 
-  RegisterConstructor("G4EmDNAPhysics_option2");
+//  RegisterConstructor("G4EmDNAPhysics_option2");
+  RegisterConstructor("G4EmDNAPhysics_option8");
   RegisterConstructor("G4EmDNAChemistry_option3");
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PhysicsList::~PhysicsList() = default;
+PhysicsList::~PhysicsList()
+{
+  if (pMessenger) { delete pMessenger; }
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -93,6 +107,7 @@ void PhysicsList::ConstructProcess()
   AddTransportation();
   if (fEmDNAPhysicsList != nullptr) {
     fEmDNAPhysicsList->ConstructProcess();
+    if (fMIoni) { ConstructMultipleIonisationProcess(); }
   }
   if (fEmDNAChemistryList != nullptr) {
     fEmDNAChemistryList->ConstructProcess();
@@ -146,25 +161,90 @@ void PhysicsList::RegisterConstructor(const G4String& name)
     fPhysDNAName = name;
   }
   else if (name == "G4EmDNAChemistry") {
-    fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry>();
+    if (fMIoni) {
+      fEmDNAChemistryList = std::make_unique<MI::DNAChemistry>();
+    } else {
+      fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry>();
+    }
     fEmDNAChemistryList->SetVerboseLevel(verboseLevel);
   }
   else if (name == "G4EmDNAChemistry_option1") {
-    fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option1>();
+    if (fMIoni) {
+      fEmDNAChemistryList = std::make_unique<MI::DNAChemistryOpt1>();
+    } else {
+      fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option1>();
+    }
     fEmDNAChemistryList->SetVerboseLevel(verboseLevel);
   }
   else if (name == "G4EmDNAChemistry_option2") {
-    fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option2>();
+    if (fMIoni) {
+      fEmDNAChemistryList = std::make_unique<MI::DNAChemistryOpt2>();
+    } else {
+      fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option2>();
+    }
     fEmDNAChemistryList->SetVerboseLevel(verboseLevel);
   }
   else if (name == "G4EmDNAChemistry_option3") {
-    fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option3>();
+    if (fMIoni) {
+      fEmDNAChemistryList = std::make_unique<MI::DNAChemistryOpt3>();
+    } else {
+      fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option3>();
+    }
     fEmDNAChemistryList->SetVerboseLevel(verboseLevel);
   }
   else {
     G4cout << "PhysicsList::RegisterConstructor: <" << name << ">"
            << " fails - name is not defined" << G4endl;
   }
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void PhysicsList::ConstructMultipleIonisationProcess()
+{
+  auto ph = G4PhysicsListHelper::GetPhysicsListHelper();
+
+  auto piter = GetParticleIterator();
+  piter->reset();
+
+  while ((*piter)()) {
+
+    auto pdef = piter->value();
+    auto pname = pdef->GetParticleName();
+
+    if (pname == "proton") {
+
+      ph->RegisterProcess(
+        new G4DNADoubleIonisation("proton_G4DNADoubleIonisation"), pdef);
+      ph->RegisterProcess(
+        new G4DNATripleIonisation("proton_G4DNATripleIonisation"), pdef);
+      ph->RegisterProcess(
+        new G4DNAQuadrupleIonisation("proton_G4DNAQuadrupleIonisation"), pdef);
+
+    } else if (pname == "alpha") {
+
+      ph->RegisterProcess(
+        new G4DNADoubleIonisation("alpha_G4DNADoubleIonisation"), pdef);
+      ph->RegisterProcess(
+        new G4DNATripleIonisation("alpha_G4DNATripleIonisation"), pdef);
+      ph->RegisterProcess(
+        new G4DNAQuadrupleIonisation("alpha_G4DNAQuadrupleIonisation"), pdef);
+
+    } else if (pname == "GenericIon") {
+
+      // for carbon ions
+      ph->RegisterProcess(
+        new G4DNADoubleIonisation("GenericIon_G4DNADoubleIonisation"), pdef);
+      ph->RegisterProcess(
+        new G4DNATripleIonisation("GenericIon_G4DNATripleIonisation"), pdef);
+      ph->RegisterProcess(
+        new G4DNAQuadrupleIonisation("GenericIon_G4DNAQuadrupleIonisation"),
+        pdef);
+
+    }
+
+  }
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

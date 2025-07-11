@@ -50,9 +50,6 @@
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
 
-#include "physics_list.hh" // NOTE(SO): physics configuration with MI
-#include "timehistory.hh"  // NOTE(So): for measurement of processing time
-
 /*
  * WARNING : Geant4 was initially not intended for this kind of application
  * This code is delivered as a prototype
@@ -66,6 +63,7 @@
 
 std::ofstream out;
 long seed = 0;
+bool mioni = false;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
 
@@ -81,22 +79,7 @@ int main(int argc, char** argv)
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
   auto* runManager = G4RunManagerFactory::CreateRunManager();
-  /*
-  // ===========================================================================
-  // NOTE(SO): physics and chmistry configuration with MI processes
-  const auto physopt = "G4EmDNAPhysics_option8";
-  const auto chemopt = "DNAChemistryOpt3"; // G4EmDNAChemistry_option3 + MI
-  auto* physlist = MI::PhysicsList::GetInstance();
-  physlist->SetPhysics(physopt);
-  physlist->EnableMultipleIonisation(true);
-  physlist->SetChemistry(chemopt);
-  auto* chemlist = physlist->GetChemistry(chemopt);
-  chemlist->UseAltB1A1Decay(true);
-  chemlist->UseAltDecayVibH2O(true);
-  physlist->SetTimeStepModel("IRT");
-  runManager->SetUserInitialization(physlist);
-  // ===========================================================================
-  */
+
   // Set mandatory initialization classes
   runManager->SetUserInitialization(new PhysicsList());
   runManager->SetUserInitialization(new DetectorConstruction());
