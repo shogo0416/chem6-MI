@@ -10,6 +10,9 @@
 #/process/chem/TimeStepModel SBS
 #/process/chem/TimeStepModel IRT_syn
 
+# enable multiple ionisation processes
+/physlist/multiple_ionisation true
+
 /run/initialize
 
 /chem/PrintSpeciesTable

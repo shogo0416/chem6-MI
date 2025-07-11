@@ -10,6 +10,9 @@
 #/process/chem/TimeStepModel SBS
 #/process/chem/TimeStepModel IRT_syn
 
+# enable multiple ionisation processes
+/physlist/multiple_ionisation true
+
 /run/initialize
 
 /chem/PrintSpeciesTable
@@ -41,16 +44,6 @@
 /scheduler/endTime 1 microsecond
 
 /run/printProgress 5
-
-/primaryKiller/eLossMin 10.0 keV # primary is killed if deposited E is greater than this value
-/primaryKiller/eLossMax 10.1 keV # event is aborted if deposited E is greated than this value
-/gun/energy 7680.0 MeV
-/run/beamOn 30
-
-/primaryKiller/eLossMin 10.0 keV # primary is killed if deposited E is greater than this value
-/primaryKiller/eLossMax 10.1 keV # event is aborted if deposited E is greated than this value
-/gun/energy 3840.0 MeV
-/run/beamOn 30
 
 /primaryKiller/eLossMin 10.0 keV # primary is killed if deposited E is greater than this value
 /primaryKiller/eLossMax 10.1 keV # event is aborted if deposited E is greated than this value
