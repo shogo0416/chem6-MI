@@ -51,6 +51,7 @@
 #include "G4VisExecutive.hh"
 
 #include "physics_list.hh" // NOTE(SO): physics configuration with MI
+#include "timehistory.hh"  // NOTE(So): for measurement of processing time
 
 /*
  * WARNING : Geant4 was initially not intended for this kind of application
@@ -80,7 +81,7 @@ int main(int argc, char** argv)
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
   auto* runManager = G4RunManagerFactory::CreateRunManager();
-
+  /*
   // ===========================================================================
   // NOTE(SO): physics and chmistry configuration with MI processes
   const auto physopt = "G4EmDNAPhysics_option8";
@@ -95,9 +96,9 @@ int main(int argc, char** argv)
   physlist->SetTimeStepModel("IRT");
   runManager->SetUserInitialization(physlist);
   // ===========================================================================
-
+  */
   // Set mandatory initialization classes
-  //runManager->SetUserInitialization(new PhysicsList());
+  runManager->SetUserInitialization(new PhysicsList());
   runManager->SetUserInitialization(new DetectorConstruction());
   runManager->SetUserInitialization(new ActionInitialization());
 

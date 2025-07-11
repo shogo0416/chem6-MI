@@ -57,6 +57,7 @@
 #include <G4SystemOfUnits.hh>
 #include <globals.hh>
 
+#include "G4Version.hh"
 /**
  \file ScoreSpecies.cc
  \class ScoreSpecies
@@ -87,6 +88,9 @@ ScoreSpecies::ScoreSpecies(G4String name, G4int depth)
   fEdep = 0;
   fNEvent = 0;
   fRunID = 0;
+#if G4VERSION_NUMBER < 1140
+  G4MoleculeCounter::Instance()->ResetCounter();
+#endif
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
@@ -146,6 +150,9 @@ void ScoreSpecies::Initialize(G4HCofThisEvent* HCE)
   }
 
   HCE->AddHitsCollection(fHCID, (G4VHitsCollection*)fEvtMap);
+#if G4VERSION_NUMBER < 1140
+  G4MoleculeCounter::Instance()->ResetCounter();
+#endif
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
@@ -154,9 +161,16 @@ void ScoreSpecies::EndOfEvent(G4HCofThisEvent*)
 {
   if (G4EventManager::GetEventManager()->GetConstCurrentEvent()->IsAborted()) {
     fEdep = 0.;
+#if G4VERSION_NUMBER < 1140
+    G4MoleculeCounter::Instance()->ResetCounter();
+#endif
     return;
   }
 
+#if G4VERSION_NUMBER >= 1140
+  // ---------------------------------------------------------------------------
+  //  for Geant4-DNA ver. 11.4
+  // ---------------------------------------------------------------------------
   // get the first, and in this case only, counter
   auto counter = G4MoleculeCounterManager::Instance()->GetMoleculeCounter<G4MoleculeCounter>(0);
   if (counter == nullptr) {
@@ -172,6 +186,7 @@ void ScoreSpecies::EndOfEvent(G4HCofThisEvent*)
     fEdep = 0.;
     return;
   }
+
   for (auto idx : indices) {
     for (auto time_mol : fTimeToRecord) {
       double n_mol = counter->GetNbMoleculesAtTime(idx, time_mol);
@@ -188,10 +203,39 @@ void ScoreSpecies::EndOfEvent(G4HCofThisEvent*)
       molInfo.fG2 += gValue * gValue;
     }
   }
-
+#else
+  // ---------------------------------------------------------------------------
+  //  for Geant4-DNA ver. 11.3 or older
+  // ---------------------------------------------------------------------------
+  auto species = G4MoleculeCounter::Instance()->GetRecordedMolecules();
+  if (species.get() == 0 || species->size() == 0) {
+    G4cout << "No molecule recorded, energy deposited= "
+           << G4BestUnit(fEdep, "Energy") << G4endl;
+    ++fNEvent;
+    fEdep = 0.;
+    G4MoleculeCounter::Instance()->ResetCounter();
+    return;
+  }
+  for (auto molecule : *species) {
+    for (auto time_mol : fTimeToRecord) {
+      double n_mol = G4MoleculeCounter::Instance()->GetNMoleculesAtTime(molecule, time_mol);
+      if (n_mol < 0) {
+        G4cerr << "N molecules not valid < 0 " << G4endl;
+        G4Exception("", "N<0", FatalException, "");
+      }
+      SpeciesInfo& molInfo = fSpeciesInfoPerTime[time_mol][molecule];
+      molInfo.fNumber += n_mol;
+      double gValue = (n_mol / (fEdep / eV)) * 100.;
+      molInfo.fG += gValue;
+      molInfo.fG2 += gValue * gValue;
+    }
+  }
+#endif
   ++fNEvent;
-
   fEdep = 0.;
+#if G4VERSION_NUMBER < 1140
+    G4MoleculeCounter::Instance()->ResetCounter();
+#endif
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....

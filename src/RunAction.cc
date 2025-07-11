@@ -43,14 +43,17 @@
 /// \brief Implementation of the RunAction class
 
 #include "RunAction.hh"
-
 #include "Run.hh"
+#include "timehistory.hh" // NOTE(SO): for measurement of processing time
+#include "G4Version.hh"
 
 #include "G4Run.hh"
 #include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
+#if G4VERSION_NUMBER >= 1140
 #include "G4DNAChemistryManager.hh"
+#endif
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
 
@@ -74,9 +77,14 @@ G4Run* RunAction::GenerateRun()
 
 void RunAction::BeginOfRunAction(const G4Run* run)
 {
+  // NOTE(SO): start timter
+  if (IsMaster()) { TimeHistory::GetTimeHistory()->TakeSplit("RunOn"); }
+
+#if G4VERSION_NUMBER >= 1140
   // ensure that the chemistry is notified!
   if (G4DNAChemistryManager::GetInstanceIfExists() != nullptr)
     G4DNAChemistryManager::GetInstanceIfExists()->BeginOfRunAction(run);
+#endif
   G4cout << "### Run " << run->GetRunID() << " starts." << G4endl;
 
   // informs the runManager to save random number seed
@@ -87,9 +95,11 @@ void RunAction::BeginOfRunAction(const G4Run* run)
 
 void RunAction::EndOfRunAction(const G4Run* run)
 {
+#if G4VERSION_NUMBER >= 1140
   // ensure that the chemistry is notified!
   if (G4DNAChemistryManager::GetInstanceIfExists() != nullptr)
     G4DNAChemistryManager::GetInstanceIfExists()->EndOfRunAction(run);
+#endif
 
   G4int nofEvents = run->GetNumberOfEvent();
   if (nofEvents == 0) return;
@@ -137,6 +147,19 @@ void RunAction::EndOfRunAction(const G4Run* run)
     masterScorer->OutputAndClear();
 
     out << '\n';
+
+    // NOTE(SO): stop timter
+    auto* timer = TimeHistory::GetTimeHistory();
+    timer->TakeSplit("RunEnd");
+    auto elaptime = timer->GetTime("RunEnd") - timer->GetTime("RunOn");
+    auto throughput = nofEvents / elaptime * 60.0;
+    G4cout << "\n=============================================" << G4endl;
+    G4cout << " Run Summary" << G4endl;
+    G4cout << " - Event Number: " << nofEvents << G4endl;
+    G4cout << " - Elasped Time: " << elaptime << " (sec)" << G4endl;
+    G4cout << " - Throughput:   " << throughput << " (events/min.)" << G4endl;
+    G4cout << "=============================================" << G4endl;
+
   }
   else {
     G4cout << G4endl << "--------------------End of Local Run------------------------" << G4endl

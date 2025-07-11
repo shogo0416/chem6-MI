@@ -46,6 +46,7 @@
 #define CHEM6_ActionInitialization_h 1
 
 #include "G4VUserActionInitialization.hh"
+#include "G4Version.hh"
 
 /// Action initialization class.
 ///
@@ -57,8 +58,9 @@ class ActionInitialization : public G4VUserActionInitialization
   public:
     ActionInitialization();
     virtual ~ActionInitialization();
+#if G4VERSION_NUMBER >= 1140
     void BuildMoleculeCounters() const;
-
+#endif
     virtual void BuildForMaster() const;
     virtual void Build() const;
 };

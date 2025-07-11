@@ -40,19 +40,24 @@
 
 #include "G4DNAChemistryManager.hh"
 #include "G4UserEventAction.hh"
+#include "G4Version.hh"
 
 class EventAction : public G4UserEventAction
 {
   public:
     void BeginOfEventAction(const G4Event* event) override
     {
+#if G4VERSION_NUMBER >= 1140
       if (G4DNAChemistryManager::GetInstanceIfExists() != nullptr)
         G4DNAChemistryManager::Instance()->BeginOfEventAction(event);
+#endif
     }
     void EndOfEventAction(const G4Event* event) override
     {
+#if G4VERSION_NUMBER >= 1140
       if (G4DNAChemistryManager::GetInstanceIfExists() != nullptr)
         G4DNAChemistryManager::Instance()->EndOfEventAction(event);
+#endif
     }
 };
 
