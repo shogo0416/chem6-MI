@@ -51,7 +51,13 @@
 #include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
-#if G4VERSION_NUMBER >= 1140
+
+#if G4VERSION_NUMBER >= 1140 || \
+   (G4VERSION_NUMBER >= 1132 && G4VERSION_REFERENCE_TAG >= 6)
+#define NEW_MOLECULE_COUNTER
+#endif
+
+#ifdef NEW_MOLECULE_COUNTER
 #include "G4DNAChemistryManager.hh"
 #endif
 
@@ -80,7 +86,7 @@ void RunAction::BeginOfRunAction(const G4Run* run)
   // NOTE(SO): start timter
   if (IsMaster()) { TimeHistory::GetTimeHistory()->TakeSplit("RunOn"); }
 
-#if G4VERSION_NUMBER >= 1140
+#ifdef NEW_MOLECULE_COUNTER
   // ensure that the chemistry is notified!
   if (G4DNAChemistryManager::GetInstanceIfExists() != nullptr)
     G4DNAChemistryManager::GetInstanceIfExists()->BeginOfRunAction(run);
@@ -95,7 +101,7 @@ void RunAction::BeginOfRunAction(const G4Run* run)
 
 void RunAction::EndOfRunAction(const G4Run* run)
 {
-#if G4VERSION_NUMBER >= 1140
+#ifdef NEW_MOLECULE_COUNTER
   // ensure that the chemistry is notified!
   if (G4DNAChemistryManager::GetInstanceIfExists() != nullptr)
     G4DNAChemistryManager::GetInstanceIfExists()->EndOfRunAction(run);

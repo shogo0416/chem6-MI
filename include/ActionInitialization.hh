@@ -48,6 +48,11 @@
 #include "G4VUserActionInitialization.hh"
 #include "G4Version.hh"
 
+#if G4VERSION_NUMBER >= 1140 || \
+   (G4VERSION_NUMBER >= 1132 && G4VERSION_REFERENCE_TAG >= 6)
+#define NEW_MOLECULE_COUNTER
+#endif
+
 /// Action initialization class.
 ///
 
@@ -58,7 +63,7 @@ class ActionInitialization : public G4VUserActionInitialization
   public:
     ActionInitialization();
     virtual ~ActionInitialization();
-#if G4VERSION_NUMBER >= 1140
+#ifdef NEW_MOLECULE_COUNTER
     void BuildMoleculeCounters() const;
 #endif
     virtual void BuildForMaster() const;

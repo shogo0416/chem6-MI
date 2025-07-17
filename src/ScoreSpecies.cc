@@ -58,6 +58,12 @@
 #include <globals.hh>
 
 #include "G4Version.hh"
+
+#if G4VERSION_NUMBER >= 1140 || \
+   (G4VERSION_NUMBER >= 1132 && G4VERSION_REFERENCE_TAG >= 6)
+#define NEW_MOLECULE_COUNTER
+#endif
+
 /**
  \file ScoreSpecies.cc
  \class ScoreSpecies
@@ -88,7 +94,7 @@ ScoreSpecies::ScoreSpecies(G4String name, G4int depth)
   fEdep = 0;
   fNEvent = 0;
   fRunID = 0;
-#if G4VERSION_NUMBER < 1140
+#ifndef NEW_MOLECULE_COUNTER
   G4MoleculeCounter::Instance()->ResetCounter();
 #endif
 }
@@ -150,7 +156,7 @@ void ScoreSpecies::Initialize(G4HCofThisEvent* HCE)
   }
 
   HCE->AddHitsCollection(fHCID, (G4VHitsCollection*)fEvtMap);
-#if G4VERSION_NUMBER < 1140
+#ifndef NEW_MOLECULE_COUNTER
   G4MoleculeCounter::Instance()->ResetCounter();
 #endif
 }
@@ -161,13 +167,13 @@ void ScoreSpecies::EndOfEvent(G4HCofThisEvent*)
 {
   if (G4EventManager::GetEventManager()->GetConstCurrentEvent()->IsAborted()) {
     fEdep = 0.;
-#if G4VERSION_NUMBER < 1140
+#ifndef NEW_MOLECULE_COUNTER
     G4MoleculeCounter::Instance()->ResetCounter();
 #endif
     return;
   }
 
-#if G4VERSION_NUMBER >= 1140
+#ifdef NEW_MOLECULE_COUNTER
   // ---------------------------------------------------------------------------
   //  for Geant4-DNA ver. 11.4
   // ---------------------------------------------------------------------------
@@ -186,7 +192,6 @@ void ScoreSpecies::EndOfEvent(G4HCofThisEvent*)
     fEdep = 0.;
     return;
   }
-
   for (auto idx : indices) {
     for (auto time_mol : fTimeToRecord) {
       double n_mol = counter->GetNbMoleculesAtTime(idx, time_mol);
@@ -230,11 +235,11 @@ void ScoreSpecies::EndOfEvent(G4HCofThisEvent*)
       molInfo.fG2 += gValue * gValue;
     }
   }
-#endif
+#endif // NEW_MOLECULE_COUNTER
   ++fNEvent;
   fEdep = 0.;
-#if G4VERSION_NUMBER < 1140
-    G4MoleculeCounter::Instance()->ResetCounter();
+#ifndef NEW_MOLECULE_COUNTER
+  G4MoleculeCounter::Instance()->ResetCounter();
 #endif
 }
 

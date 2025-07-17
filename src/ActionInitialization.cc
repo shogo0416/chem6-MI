@@ -47,14 +47,15 @@
 #include "StackingAction.hh"
 #include "TimeStepAction.hh"
 
-
 #include "G4DNAChemistryManager.hh"
 #include "G4H2O.hh"
 #include "G4MoleculeCounter.hh"
 #include "G4Scheduler.hh"
-#if G4VERSION_NUMBER >= 1140
+
+#ifdef NEW_MOLECULE_COUNTER
 #include "G4MoleculeReactionCounter.hh"
 #endif
+
 #include "EventAction.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
 
@@ -69,7 +70,7 @@ ActionInitialization::~ActionInitialization() {}
 void ActionInitialization::BuildForMaster() const
 {
   SetUserAction(new RunAction());
-#if G4VERSION_NUMBER < 1140
+#ifndef NEW_MOLECULE_COUNTER
   G4DNAChemistryManager::Instance()->ResetCounterWhenRunEnds(false);
 #endif
 }
@@ -78,7 +79,7 @@ void ActionInitialization::BuildForMaster() const
 
 void ActionInitialization::Build() const
 {
-#if G4VERSION_NUMBER < 1140
+#ifndef NEW_MOLECULE_COUNTER
   G4MoleculeCounter::Instance()->Use();
   G4MoleculeCounter::Instance()->DontRegister(G4H2O::Definition());
   // sequential mode
@@ -92,12 +93,12 @@ void ActionInitialization::Build() const
   SetUserAction(new EventAction());
   SetUserAction(new StackingAction());
   G4Scheduler::Instance()->SetUserAction(new G4UserTimeStepAction);
-#if G4VERSION_NUMBER >= 1140
+#ifdef NEW_MOLECULE_COUNTER
   BuildMoleculeCounters();
 #endif
 }
 
-#if G4VERSION_NUMBER >= 1140
+#ifdef NEW_MOLECULE_COUNTER
 void ActionInitialization::BuildMoleculeCounters() const
 {
   G4MoleculeCounterManager::Instance()->SetResetCountersBeforeEvent(true);
