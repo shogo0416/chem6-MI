@@ -1,0 +1,851 @@
+
+**************************************************************
+ Geant4 version Name: geant4-11-04-beta-01 [MT]   (26-June-2025)
+  << in Multi-threaded mode >> 
+                       Copyright : Geant4 Collaboration
+                      References : NIM A 506 (2003), 250-303
+                                 : IEEE-TNS 53 (2006), 270-278
+                                 : NIM A 835 (2016), 186-225
+                             WWW : http://geant4.org/
+**************************************************************
+
+===== Register constructor ==== G4EmDNAPhysics_option8
+===== Register constructor ==== G4EmDNAChemistry_option3
+G4SDManager::AddNewCollection : the collection <mfDetector/PrimaryKiller> is registered at 1
+G4SDManager::AddNewCollection : the collection <mfDetector/LET> is registered at 2
+G4SDManager::AddNewCollection : the collection <mfDetector/Species> is registered at 3
+New sensitive detector <mfDetector> is registered at /
+=======================================================================
+======                 Electromagnetic Physics Parameters      ========
+=======================================================================
+LPM effect enabled                                 1
+Enable creation and use of sampling tables         0
+Apply cuts on all EM processes                     0
+Use combined TransportationWithMsc                 Disabled
+Use general process                                0
+Enable linear polarisation for gamma               0
+Enable photoeffect sampling below K-shell          1
+Enable sampling of quantum entanglement            0
+X-section factor for integral approach             0.8
+Min kinetic energy for tables                      10 eV 
+Max kinetic energy for tables                      600 MeV
+Number of bins per decade of a table               20
+Verbose level                                      1
+Verbose level for worker thread                    0
+Bremsstrahlung energy threshold above which 
+  primary e+- is added to the list of secondary    100 TeV
+Bremsstrahlung energy threshold above which primary
+  muon/hadron is added to the list of secondary    100 TeV
+Positron annihilation at rest model                AllisonPositronium
+Enable 3 gamma annihilation on fly                 0
+Lowest triplet kinetic energy                      1 MeV
+Enable sampling of gamma linear polarisation       0
+5D gamma conversion model type                     0
+5D gamma conversion model on isolated ion          0
+Use RiGe 5D e+e- pair production model by muons    0
+Livermore data directory                           epics_2017
+=======================================================================
+======                 Ionisation Parameters                   ========
+=======================================================================
+Step function for e+-                              (0.2, 0.01 mm)
+Step function for muons/hadrons                    (0.1, 0.05 mm)
+Step function for light ions                       (0.1, 0.02 mm)
+Step function for general ions                     (0.1, 0.001 mm)
+Lowest e+e- kinetic energy                         0 eV 
+Lowest muon/hadron kinetic energy                  1 keV
+Use ICRU90 data                                    1
+Fluctuations of dE/dx are enabled                  1
+Type of fluctuation model for leptons and hadrons  Universal
+Use built-in Birks satuaration                     0
+Build CSDA range enabled                           0
+Use cut as a final range enabled                   0
+Enable angular generator interface                 1
+Max kinetic energy for CSDA tables                 1 GeV
+Max kinetic energy for NIEL computation            0 eV 
+Linear loss limit                                  0.01
+Read data from file for e+e- pair production by mu 0
+=======================================================================
+======                 Multiple Scattering Parameters          ========
+=======================================================================
+Type of msc step limit algorithm for e+-           2
+Type of msc step limit algorithm for muons/hadrons 0
+Msc lateral displacement for e+- enabled           1
+Msc lateral displacement for muons and hadrons     0
+Urban msc model lateral displacement alg96         1
+Range factor for msc step limit for e+-            0.08
+Range factor for msc step limit for muons/hadrons  0.2
+Geometry factor for msc step limitation of e+-     2.5
+Safety factor for msc step limit for e+-           0.6
+Skin parameter for msc step limitation of e+-      3
+Lambda limit for msc step limit for e+-            1 mm
+Use Mott correction for e- scattering              1
+Factor used for dynamic computation of angular 
+  limit between single and multiple scattering     1
+Fixed angular limit between single 
+  and multiple scattering                          3.1416 rad
+Upper energy limit for e+- multiple scattering     100 MeV
+Type of electron single scattering model           0
+Type of nuclear form-factor                        1
+Screening factor                                   1
+=======================================================================
+======                 Atomic Deexcitation Parameters          ========
+=======================================================================
+Fluorescence enabled                               1
+Directory in G4LEDATA for fluorescence data files  fluor
+Auger electron cascade enabled                     1
+PIXE atomic de-excitation enabled                  0
+De-excitation module ignores cuts                  1
+Type of PIXE cross section for hadrons             Empirical
+Type of PIXE cross section for e+-                 Livermore
+=======================================================================
+======                 DNA Physics Parameters                  ========
+=======================================================================
+Use fast sampling in DNA models                    0
+Use Stationary option in DNA models                0
+Use DNA with multiple scattering of e-             0
+Use DNA e- solvation model type                    11003
+Use DNA Chemistry model                            IRT
+=======================================================================
+
+### ===  Deexcitation model UAtomDeexcitation is activated for 1 region:
+          DefaultRegionForTheWorld  1  1  0
+### ===  Auger flag: 1
+### ===  Ignore cuts flag:   1
+
+phot:  for gamma SubType=12 BuildTable=0
+      LambdaPrime table from 200 keV to 600 MeV in 72 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+ LivermorePhElectric : Emin=    0 eV  Emax=  600 MeV  SauterGavrila Fluo
+
+compt:  for gamma SubType=13 BuildTable=1
+      Lambda table from 10 eV  to 1 MeV, 21 bins/decade, spline: 1
+      LambdaPrime table from 1 MeV to 600 MeV in 57 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+   LowEPComptonModel : Emin=    0 eV  Emax=   20 MeV Fluo
+        KleinNishina : Emin=   20 MeV Emax=  600 MeV Fluo
+
+conv:  for gamma SubType=14 BuildTable=1
+      Lambda table from 1.022 MeV to 600 MeV, 28 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+     BetheHeitlerLPM : Emin=    0 eV  Emax=  600 MeV  ModifiedTsai
+
+Rayl:  for gamma SubType=11 BuildTable=1
+      Lambda table from 10 eV  to 150 keV, 21 bins/decade, spline: 0
+      LambdaPrime table from 150 keV to 600 MeV in 74 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+   LivermoreRayleigh : Emin=    0 eV  Emax=  600 MeV  CullenGenerator
+
+msc:  for e-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    1 MeV Emax=  600 MeV Nbins=60   1 MeV - 600 MeV
+          StepLim=SafetyPlus Rfact=0.08 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+eIoni:  for e-  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.2, 0.01 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha : Emin=    1 MeV Emax=  600 MeV  deltaVI
+
+eBrem:  for e-  XStype:4  SubType=3
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      LPM flag: 1 for E > 0.6 GeV,  VertexHighEnergyTh(GeV)= 100000
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB : Emin=    1 MeV Emax=  600 MeV  AngularGen2BS
+
+e-_G4DNAElectronSolvation:  for e- SubType=58 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAOneStepThermalizationModel_Meesungnoen2002 : Emin=    0 eV  Emax=   10 eV 
+          DummyModel : Emin=   10 eV  Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+e-_G4DNAElastic:  for e- SubType=51 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAUeharaScreenedRutherfordElasticModel : Emin=    0 eV  Emax=    1 MeV
+          DummyModel : Emin=    1 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+e-_G4DNAExcitation:  for e- SubType=52 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAEmfietzoglouExcitationModel : Emin=    0 eV  Emax=   10 keV
+DNABornExcitationModel : Emin=   10 keV Emax=    1 MeV
+          DummyModel : Emin=    1 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+e-_G4DNAIonisation:  for e- SubType=53 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAEmfietzoglouIonisationModel : Emin=    0 eV  Emax=   10 keV  deltaBorn Fluo
+DNABornIonisationModel : Emin=   10 keV Emax=    1 MeV  deltaBorn Fluo
+          DummyModel : Emin=    1 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+e-_G4DNAVibExcitation:  for e- SubType=54 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNASancheExcitationModel : Emin=    0 eV  Emax=  100 eV 
+          DummyModel : Emin=  100 eV  Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+e-_G4DNAAttachment:  for e- SubType=55 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAMeltonAttachmentModel : Emin=    0 eV  Emax=   13 eV 
+          DummyModel : Emin=   13 eV  Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+msc:  for e+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  600 MeV Nbins=140 100 eV  - 600 MeV
+          StepLim=SafetyPlus Rfact=0.08 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+eIoni:  for e+  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.2, 0.01 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha : Emin=    0 eV  Emax=  600 MeV  deltaVI
+
+eBrem:  for e+  XStype:4  SubType=3
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      LPM flag: 1 for E > 0.6 GeV,  VertexHighEnergyTh(GeV)= 100000
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB : Emin=    0 eV  Emax=  600 MeV  AngularGen2BS
+
+annihil:  for e+ XStype:2 SubType=5 AtRestModel:Allison BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            eplus2gg : Emin=    0 eV  Emax=  600 MeV
+
+msc:  for proton  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    1 MeV Emax=  600 MeV Nbins=60   1 MeV - 600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for proton  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          BetheBloch : Emin=  300 MeV Emax=  600 MeV  deltaVI
+
+proton_G4DNAElastic:  for proton SubType=51 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  DNAIonElasticModel : Emin=    0 eV  Emax=    1 MeV
+          DummyModel : Emin=    1 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+proton_G4DNAExcitation:  for proton SubType=52 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAMillerGreenExcitationModel : Emin=    0 eV  Emax=  100 MeV
+DNARPWBAExcitationModel : Emin=  100 MeV Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+proton_G4DNAIonisation:  for proton SubType=53 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNARuddIonisationDynamicModel : Emin=    0 eV  Emax=  100 MeV  deltaRudd Fluo
+DNARPWBAIonisationModel : Emin=  100 MeV Emax=  300 MeV  deltaBorn Fluo
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+proton_G4DNAChargeDecrease:  for proton SubType=56 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNADingfelderChargeDecreaseModel : Emin=    0 eV  Emax=  100 MeV
+          DummyModel : Emin=  100 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+msc:  for GenericIon  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    1 MeV Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+ionIoni:  for GenericIon  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.001 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          BetheBloch : Emin=  300 MeV Emax=  600 MeV  deltaVI
+
+GenericIon_G4DNAIonisation:  for GenericIon SubType=53 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAIonIonisationModel : Emin=    0 eV  Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+nuclearStopping:  for GenericIon SubType=8 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+   ICRU49NucStopping : Emin=    0 eV  Emax=    1 MeV
+
+msc:  for alpha  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    1 MeV Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+ionIoni:  for alpha  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.02 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          BetheBloch : Emin=  300 MeV Emax=  600 MeV  deltaVI
+
+alpha_G4DNAElastic:  for alpha SubType=51 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  DNAIonElasticModel : Emin=    0 eV  Emax=    1 MeV
+          DummyModel : Emin=    1 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+alpha_G4DNAExcitation:  for alpha SubType=52 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAMillerGreenExcitationModel : Emin=    0 eV  Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+alpha_G4DNAIonisation:  for alpha SubType=53 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNARuddIonisationDynamicModel : Emin=    0 eV  Emax=  300 MeV  deltaRudd Fluo
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+alpha_G4DNAChargeDecrease:  for alpha SubType=56 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNADingfelderChargeDecreaseModel : Emin=    0 eV  Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+msc:  for alpha+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    1 MeV Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for alpha+  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          BetheBloch : Emin=  300 MeV Emax=  600 MeV  deltaVI
+
+alpha+_G4DNAElastic:  for alpha+ SubType=51 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  DNAIonElasticModel : Emin=    0 eV  Emax=    1 MeV
+          DummyModel : Emin=    1 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+alpha+_G4DNAExcitation:  for alpha+ SubType=52 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAMillerGreenExcitationModel : Emin=    0 eV  Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+alpha+_G4DNAIonisation:  for alpha+ SubType=53 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNARuddIonisationDynamicModel : Emin=    0 eV  Emax=  300 MeV  deltaRudd Fluo
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+alpha+_G4DNAChargeIncrease:  for alpha+ SubType=57 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNADingfelderChargeIncreaseModel : Emin=    0 eV  Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+alpha+_G4DNAChargeDecrease:  for alpha+ SubType=56 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNADingfelderChargeDecreaseModel : Emin=    0 eV  Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+msc:  for anti_proton  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for anti_proton  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=    2 MeV  deltaVI
+          BetheBloch : Emin=    2 MeV Emax=  600 MeV  deltaVI
+
+helium_G4DNAElastic:  for helium SubType=51 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  DNAIonElasticModel : Emin=    0 eV  Emax=    1 MeV
+          DummyModel : Emin=    1 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+helium_G4DNAExcitation:  for helium SubType=52 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAMillerGreenExcitationModel : Emin=    0 eV  Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+helium_G4DNAIonisation:  for helium SubType=53 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNARuddIonisationDynamicModel : Emin=    0 eV  Emax=  300 MeV  deltaRudd Fluo
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+helium_G4DNAChargeIncrease:  for helium SubType=57 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNADingfelderChargeIncreaseModel : Emin=    0 eV  Emax=  300 MeV
+          DummyModel : Emin=  300 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+hydrogen_G4DNAElastic:  for hydrogen SubType=51 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  DNAIonElasticModel : Emin=    0 eV  Emax=    1 MeV
+          DummyModel : Emin=    1 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+hydrogen_G4DNAExcitation:  for hydrogen SubType=52 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNAMillerGreenExcitationModel : Emin=    0 eV  Emax=  500 keV
+          DummyModel : Emin=  500 keV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+hydrogen_G4DNAIonisation:  for hydrogen SubType=53 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNARuddIonisationDynamicModel : Emin=    0 eV  Emax=  100 MeV  deltaRudd Fluo
+          DummyModel : Emin=  100 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+hydrogen_G4DNAChargeIncrease:  for hydrogen SubType=57 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+DNADingfelderChargeIncreaseModel : Emin=    0 eV  Emax=  100 MeV
+          DummyModel : Emin=  100 MeV Emax=  600 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+msc:  for kaon+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for kaon+  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=1.05231 MeV  deltaVI
+          BetheBloch : Emin=1.05231 MeV Emax=  600 MeV  deltaVI
+
+msc:  for kaon-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for kaon-  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=1.05231 MeV  deltaVI
+          BetheBloch : Emin=1.05231 MeV Emax=  600 MeV  deltaVI
+
+msc:  for mu+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for mu+  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=225.219 keV  deltaVI
+          BetheBloch : Emin=225.219 keV Emax=  600 MeV  deltaVI
+
+msc:  for mu-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for mu-  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=225.219 keV  deltaVI
+          BetheBloch : Emin=225.219 keV Emax=  600 MeV  deltaVI
+
+msc:  for pi+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for pi+  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=297.505 keV  deltaVI
+          BetheBloch : Emin=297.505 keV Emax=  600 MeV  deltaVI
+
+msc:  for pi-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  600 MeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=3 Llim=1 mm
+
+hIoni:  for pi-  XStype:3  SubType=2
+      dE/dx and range tables from 10 eV  to 600 MeV in 160 bins
+      Lambda tables from threshold to 600 MeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=297.505 keV  deltaVI
+          BetheBloch : Emin=297.505 keV Emax=  600 MeV  deltaVI
+
+=========================================================================
+--> G4TaskRunManager::CreateAndStartWorkers() --> Initializing workers...
+=========================================================================
+
+
+Molecular Config | Diffusion Coefficient (m2 / s)       | Radius (nm) 
+_____________________________________________________________________________
+H3O^1                 9.46e-09                          0.25
+_____________________________________________________________________________
+°OH^0                 2.2e-09                          0.22
+_____________________________________________________________________________
+OH^-1                  5.3e-09                          0.33
+_____________________________________________________________________________
+e_aq^-1                4.9e-09                           0.5
+_____________________________________________________________________________
+H^0                      7e-09                          0.19
+_____________________________________________________________________________
+H_2^0                  4.8e-09                          0.14
+_____________________________________________________________________________
+H2O2^0                 2.3e-09                          0.21
+_____________________________________________________________________________
+HO_2°^0               2.3e-09                          0.21
+_____________________________________________________________________________
+HO_2^-1                1.4e-09                          0.25
+_____________________________________________________________________________
+°O^0                    2e-09                           0.2
+_____________________________________________________________________________
+O^-1                     2e-09                          0.25
+_____________________________________________________________________________
+O_2^0                  2.4e-09                          0.17
+_____________________________________________________________________________
+O_2^-1                1.75e-09                          0.22
+_____________________________________________________________________________
+O_3^0                    2e-09                           0.2
+_____________________________________________________________________________
+O_3^-1                   2e-09                           0.2
+_____________________________________________________________________________
+H2O^0                        0                         0.275
+_____________________________________________________________________________
+H3O^1                        0                        0.0961
+_____________________________________________________________________________
+OH^-1                        0                        0.0958
+_____________________________________________________________________________
+None^0                       0                             0
+_____________________________________________________________________________
+H2O^0                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^0                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^0                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^0                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^0                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^1                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^1                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^1                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^1                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^1                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^-1                   2e-09                         0.275
+_____________________________________________________________________________
+H2O^0                    2e-09                         0.275
+_____________________________________________________________________________
+H2O^0                    2e-09                         0.275
+_____________________________________________________________________________
+HO_2^-1                2.3e-09                          0.21
+_____________________________________________________________________________
+HO_2°^0               2.3e-09                          0.21
+_____________________________________________________________________________
+None^0                       0                             0
+_____________________________________________________________________________
+O^0                      2e-09                           0.2
+_____________________________________________________________________________
+OH^-1                  2.8e-09                        0.0958
+_____________________________________________________________________________
+O_2^0                  2.4e-09                          0.17
+_____________________________________________________________________________
+O_3^0                    2e-09                           0.2
+_____________________________________________________________________________
+°O^0                    2e-09                           0.2
+_____________________________________________________________________________
+Number of chemical species involved in reactions = 6
+Reaction                                    Reaction Rate [dm3/(mol*s)]   
+----------------------------------------------------------------------------
+H3O^1 + OH^-1 -> No product                 1.13e+11                      
+----------------------------------------------------------------------------
+H3O^1 + e_aq^-1 -> H^0                      2.11e+10                      
+----------------------------------------------------------------------------
+°OH^0 + H^0 -> No product                  1.55e+10                      
+----------------------------------------------------------------------------
+°OH^0 + °OH^0 -> H2O2^0                   5.5e+09                       
+----------------------------------------------------------------------------
+°OH^0 + e_aq^-1 -> OH^-1                   2.95e+10                      
+----------------------------------------------------------------------------
+e_aq^-1 + H^0 -> H_2^0 + OH^-1              2.5e+10                       
+----------------------------------------------------------------------------
+e_aq^-1 + e_aq^-1 -> H_2^0 + OH^-1 + OH^-1  6.36e+09                      
+----------------------------------------------------------------------------
+e_aq^-1 + H2O2^0 -> OH^-1 + °OH^0          1.1e+10                       
+----------------------------------------------------------------------------
+H^0 + H^0 -> H_2^0                          5.03e+09                      
+----------------------------------------------------------------------------
+### Run 0 starts.
+### Run 0 starts.
+
+============================================================================================
+--> G4TaskRunManager::CreateAndStartWorkers() --> Creating 100 tasks with 100 events/task...
+============================================================================================
+
+G4WT0 > ### Run 0 starts on worker thread 0.
+G4WT0 > ### Run 0 starts.
+G4WT0 > --> Event 0 starts with initial seeds (15470735,58711377).
+G4WT1 > ### Run 0 starts on worker thread 1.
+G4WT1 > ### Run 0 starts.
+G4WT1 > --> Event 100 starts with initial seeds (94651619,77817948).
+G4WT5 > ### Run 0 starts on worker thread 5.
+G4WT5 > ### Run 0 starts.
+G4WT5 > --> Event 200 starts with initial seeds (54325673,23191597).
+G4WT4 > ### Run 0 starts on worker thread 4.
+G4WT4 > ### Run 0 starts.
+G4WT4 > --> Event 300 starts with initial seeds (61861915,89974803).
+G4WT8 > ### Run 0 starts on worker thread 8.
+G4WT8 > ### Run 0 starts.
+G4WT8 > --> Event 400 starts with initial seeds (54454752,3743942).
+G4WT2 > ### Run 0 starts on worker thread 2.
+G4WT2 > ### Run 0 starts.
+G4WT2 > --> Event 500 starts with initial seeds (11481005,71149785).
+G4WT13 > ### Run 0 starts on worker thread 13.
+G4WT13 > ### Run 0 starts.
+G4WT13 > --> Event 600 starts with initial seeds (37844090,80676144).
+G4WT12 > ### Run 0 starts on worker thread 12.
+G4WT12 > ### Run 0 starts.
+G4WT12 > --> Event 700 starts with initial seeds (53737979,40459558).
+G4WT15 > ### Run 0 starts on worker thread 15.
+G4WT15 > ### Run 0 starts.
+G4WT15 > --> Event 800 starts with initial seeds (17870526,37945701).
+G4WT3 > ### Run 0 starts on worker thread 3.
+G4WT3 > ### Run 0 starts.
+G4WT3 > --> Event 900 starts with initial seeds (46299214,3661534).
+G4WT6 > ### Run 0 starts on worker thread 6.
+G4WT6 > ### Run 0 starts.
+G4WT6 > --> Event 1000 starts with initial seeds (71728658,19690414).
+G4WT11 > ### Run 0 starts on worker thread 11.
+G4WT11 > ### Run 0 starts.
+G4WT11 > --> Event 1100 starts with initial seeds (62785844,24818217).
+G4WT9 > ### Run 0 starts on worker thread 9.
+G4WT9 > ### Run 0 starts.
+G4WT9 > --> Event 1200 starts with initial seeds (14626204,38094975).
+G4WT14 > ### Run 0 starts on worker thread 14.
+G4WT14 > ### Run 0 starts.
+G4WT14 > --> Event 1300 starts with initial seeds (39771737,28799215).
+G4WT7 > ### Run 0 starts on worker thread 7.
+G4WT7 > ### Run 0 starts.
+G4WT7 > --> Event 1400 starts with initial seeds (63748587,29840907).
+G4WT10 > ### Run 0 starts on worker thread 10.
+G4WT10 > ### Run 0 starts.
+G4WT10 > --> Event 1500 starts with initial seeds (33242788,22942195).
+G4WT2 > --> Event 1600 starts with initial seeds (17599780,9489704).
+G4WT1 > --> Event 1700 starts with initial seeds (16396344,96826961).
+G4WT15 > --> Event 1800 starts with initial seeds (30204104,16086815).
+G4WT11 > --> Event 1900 starts with initial seeds (15925368,47335909).
+G4WT0 > --> Event 2000 starts with initial seeds (59292523,12515448).
+G4WT5 > --> Event 2100 starts with initial seeds (83390193,45834263).
+G4WT13 > --> Event 2200 starts with initial seeds (48427547,99347771).
+G4WT6 > --> Event 2300 starts with initial seeds (456801,2100948).
+G4WT9 > --> Event 2400 starts with initial seeds (31798132,34518747).
+G4WT14 > --> Event 2500 starts with initial seeds (78495423,11025315).
+G4WT4 > --> Event 2600 starts with initial seeds (39417683,92745978).
+G4WT12 > --> Event 2700 starts with initial seeds (806294,64900272).
+G4WT10 > --> Event 2800 starts with initial seeds (28319360,55314068).
+G4WT8 > --> Event 2900 starts with initial seeds (63848194,75399613).
+G4WT7 > --> Event 3000 starts with initial seeds (57770541,22981628).
+G4WT3 > --> Event 3100 starts with initial seeds (39397780,10044371).
+G4WT2 > --> Event 3200 starts with initial seeds (29832987,12175048).
+G4WT15 > --> Event 3300 starts with initial seeds (14295696,23486556).
+G4WT5 > --> Event 3400 starts with initial seeds (50412657,45737908).
+G4WT0 > --> Event 3500 starts with initial seeds (19505983,8049029).
+G4WT6 > --> Event 3600 starts with initial seeds (52579253,95364730).
+G4WT1 > --> Event 3700 starts with initial seeds (12390034,91089236).
+G4WT11 > --> Event 3800 starts with initial seeds (51634161,36080935).
+G4WT9 > --> Event 3900 starts with initial seeds (36656501,76521105).
+G4WT13 > --> Event 4000 starts with initial seeds (44982723,4235798).
+G4WT10 > --> Event 4100 starts with initial seeds (51030329,72212439).
+G4WT12 > --> Event 4200 starts with initial seeds (5199688,77052844).
+G4WT7 > --> Event 4300 starts with initial seeds (44873155,36201545).
+G4WT14 > --> Event 4400 starts with initial seeds (65460522,86211657).
+G4WT4 > --> Event 4500 starts with initial seeds (86807921,51145732).
+G4WT3 > --> Event 4600 starts with initial seeds (75794534,41052462).
+G4WT8 > --> Event 4700 starts with initial seeds (70811948,2556979).
+G4WT2 > --> Event 4800 starts with initial seeds (19111359,97248712).
+G4WT15 > --> Event 4900 starts with initial seeds (99502215,26079233).
+G4WT6 > --> Event 5000 starts with initial seeds (90368858,11678699).
+G4WT1 > --> Event 5100 starts with initial seeds (11695169,18235549).
+G4WT5 > --> Event 5200 starts with initial seeds (1473353,81648356).
+G4WT11 > --> Event 5300 starts with initial seeds (98863634,2984018).
+G4WT0 > --> Event 5400 starts with initial seeds (65973262,51077702).
+G4WT9 > --> Event 5500 starts with initial seeds (4452691,43245272).
+G4WT13 > --> Event 5600 starts with initial seeds (87172836,14950641).
+G4WT7 > --> Event 5700 starts with initial seeds (99081712,17450155).
+G4WT12 > --> Event 5800 starts with initial seeds (41757516,64007273).
+G4WT4 > --> Event 5900 starts with initial seeds (39957192,3178471).
+G4WT3 > --> Event 6000 starts with initial seeds (92754086,12398389).
+G4WT10 > --> Event 6100 starts with initial seeds (76431354,56619149).
+G4WT14 > --> Event 6200 starts with initial seeds (87134900,43187431).
+G4WT8 > --> Event 6300 starts with initial seeds (99931136,63852673).
+G4WT2 > --> Event 6400 starts with initial seeds (20307114,79379915).
+G4WT15 > --> Event 6500 starts with initial seeds (37524066,84541763).
+G4WT6 > --> Event 6600 starts with initial seeds (12550756,23862990).
+G4WT1 > --> Event 6700 starts with initial seeds (71969852,93157515).
+G4WT9 > --> Event 6800 starts with initial seeds (24461665,76643326).
+G4WT0 > --> Event 6900 starts with initial seeds (16941510,28553101).
+G4WT11 > --> Event 7000 starts with initial seeds (90074305,33510513).
+G4WT5 > --> Event 7100 starts with initial seeds (70493126,25144311).
+G4WT7 > --> Event 7200 starts with initial seeds (71061966,53633546).
+G4WT13 > --> Event 7300 starts with initial seeds (35280432,23371097).
+G4WT4 > --> Event 7400 starts with initial seeds (65803477,95401389).
+G4WT12 > --> Event 7500 starts with initial seeds (6420217,8584895).
+G4WT3 > --> Event 7600 starts with initial seeds (74227700,68285365).
+G4WT8 > --> Event 7700 starts with initial seeds (58458088,75806566).
+G4WT10 > --> Event 7800 starts with initial seeds (43179980,71427947).
+G4WT14 > --> Event 7900 starts with initial seeds (32792873,42665277).
+G4WT15 > --> Event 8000 starts with initial seeds (70735303,48908849).
+G4WT2 > --> Event 8100 starts with initial seeds (13805609,28269575).
+G4WT6 > --> Event 8200 starts with initial seeds (14391276,54383562).
+G4WT1 > --> Event 8300 starts with initial seeds (79701246,67304133).
+G4WT0 > --> Event 8400 starts with initial seeds (84095892,34756172).
+G4WT7 > --> Event 8500 starts with initial seeds (81188695,8316863).
+G4WT5 > --> Event 8600 starts with initial seeds (76083662,23181059).
+G4WT9 > --> Event 8700 starts with initial seeds (11512089,98630541).
+G4WT11 > --> Event 8800 starts with initial seeds (11306804,25873034).
+G4WT3 > --> Event 8900 starts with initial seeds (26235761,53257911).
+G4WT8 > --> Event 9000 starts with initial seeds (75762242,76481623).
+G4WT4 > --> Event 9100 starts with initial seeds (16395517,41595137).
+G4WT12 > --> Event 9200 starts with initial seeds (30670171,86235828).
+G4WT13 > --> Event 9300 starts with initial seeds (94847165,24832209).
+G4WT10 > --> Event 9400 starts with initial seeds (16530702,16259259).
+G4WT14 > --> Event 9500 starts with initial seeds (10571584,35530509).
+G4WT15 > --> Event 9600 starts with initial seeds (16297341,47038414).
+G4WT2 > --> Event 9700 starts with initial seeds (18473598,34678574).
+G4WT6 > --> Event 9800 starts with initial seeds (87846075,18188343).
+G4WT0 > --> Event 9900 starts with initial seeds (47121121,26131054).
+G4WT9 > 
+G4WT9 > --------------------End of Local Run------------------------
+G4WT9 >   The run has 526 events
+G4WT9 >  Total energy deposited in the world volume : 3.7427e+06 eV
+G4WT9 >  ------------------------------------------------------------
+G4WT9 > 
+G4WT5 > 
+G4WT5 > --------------------End of Local Run------------------------
+G4WT5 >   The run has 509 events
+G4WT5 >  Total energy deposited in the world volume : 3.6381e+06 eV
+G4WT5 >  ------------------------------------------------------------
+G4WT5 > 
+G4WT7 > 
+G4WT7 > --------------------End of Local Run------------------------
+G4WT7 >   The run has 524 events
+G4WT7 >  Total energy deposited in the world volume : 3.7589e+06 eV
+G4WT7 >  ------------------------------------------------------------
+G4WT7 > 
+G4WT6 > 
+G4WT6 > --------------------End of Local Run------------------------
+G4WT6 >   The run has 596 events
+G4WT6 >  Total energy deposited in the world volume : 4.2361e+06 eV
+G4WT6 >  ------------------------------------------------------------
+G4WT6 > 
+G4WT3 > 
+G4WT3 > --------------------End of Local Run------------------------
+G4WT3 >   The run has 519 events
+G4WT3 >  Total energy deposited in the world volume : 3.659e+06 eV
+G4WT3 >  ------------------------------------------------------------
+G4WT3 > 
+G4WT12 > 
+G4WT12 > --------------------End of Local Run------------------------
+G4WT12 >   The run has 512 events
+G4WT12 >  Total energy deposited in the world volume : 3.569e+06 eV
+G4WT12 >  ------------------------------------------------------------
+G4WT12 > 
+G4WT13 > 
+G4WT13 > --------------------End of Local Run------------------------
+G4WT13 >   The run has 518 events
+G4WT13 >  Total energy deposited in the world volume : 3.73e+06 eV
+G4WT13 >  ------------------------------------------------------------
+G4WT13 > 
+G4WT0 > 
+G4WT0 > --------------------End of Local Run------------------------
+G4WT0 >   The run has 611 events
+G4WT0 >  Total energy deposited in the world volume : 4.3975e+06 eV
+G4WT0 >  ------------------------------------------------------------
+G4WT0 > 
+G4WT1 > 
+G4WT1 > --------------------End of Local Run------------------------
+G4WT1 >   The run has 530 events
+G4WT1 >  Total energy deposited in the world volume : 3.7122e+06 eV
+G4WT1 >  ------------------------------------------------------------
+G4WT1 > 
+G4WT2 > 
+G4WT2 > --------------------End of Local Run------------------------
+G4WT2 >   The run has 588 events
+G4WT2 >  Total energy deposited in the world volume : 4.2484e+06 eV
+G4WT2 >  ------------------------------------------------------------
+G4WT2 > 
+G4WT11 > 
+G4WT11 > --------------------End of Local Run------------------------
+G4WT11 >   The run has 520 events
+G4WT11 >  Total energy deposited in the world volume : 3.7262e+06 eV
+G4WT11 >  ------------------------------------------------------------
+G4WT11 > 
+G4WT15 > 
+G4WT15 > --------------------End of Local Run------------------------
+G4WT15 >   The run has 591 events
+G4WT15 >  Total energy deposited in the world volume : 4.2606e+06 eV
+G4WT15 >  ------------------------------------------------------------
+G4WT15 > 
+G4WT8 > 
+G4WT8 > --------------------End of Local Run------------------------
+G4WT8 >   The run has 511 events
+G4WT8 >  Total energy deposited in the world volume : 3.6364e+06 eV
+G4WT8 >  ------------------------------------------------------------
+G4WT8 > 
+G4WT14 > 
+G4WT14 > --------------------End of Local Run------------------------
+G4WT14 >   The run has 527 events
+G4WT14 >  Total energy deposited in the world volume : 3.7301e+06 eV
+G4WT14 >  ------------------------------------------------------------
+G4WT14 > 
+G4WT10 > 
+G4WT10 > --------------------End of Local Run------------------------
+G4WT10 >   The run has 533 events
+G4WT10 >  Total energy deposited in the world volume : 3.7622e+06 eV
+G4WT10 >  ------------------------------------------------------------
+G4WT10 > 
+G4WT4 > 
+G4WT4 > --------------------End of Local Run------------------------
+G4WT4 >   The run has 499 events
+G4WT4 >  Total energy deposited in the world volume : 3.4658e+06 eV
+G4WT4 >  ------------------------------------------------------------
+G4WT4 > 
+
+--------------------End of Global Run-----------------------
+  The run has 8614 events 
+Number of events recorded by the species scorer = 8614
+
+=============================================
+ Run Summary
+ - Event Number: 8614
+ - Elasped Time: 548.57 (sec)
+ - Throughput:   942.159 (events/min.)
+=============================================
+ Total energy deposited in the world volume : 6.12733e+07 eV
+ ------------------------------------------------------------
+
