@@ -76,8 +76,8 @@ PhysicsList::PhysicsList()
   SetDefaultCutValue(currentDefaultCut);
   SetVerboseLevel(1);
 
-//  RegisterConstructor("G4EmDNAPhysics_option2");
-  RegisterConstructor("G4EmDNAPhysics_option8");
+  RegisterConstructor("G4EmDNAPhysics_option2");
+//  RegisterConstructor("G4EmDNAPhysics_option8");
   RegisterConstructor("G4EmDNAChemistry_option3");
 }
 
