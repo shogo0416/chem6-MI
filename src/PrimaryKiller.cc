@@ -116,8 +116,9 @@ G4bool PrimaryKiller::ProcessHits(G4Step* aStep, G4TouchableHistory*)
     return false;
   }
 
-  if (track->GetTrackID() != 1 || track->GetParticleDefinition()->GetPDGEncoding() != 11)
-    return FALSE;
+  // NOTE(SO): PrimaryKiller will work for primary particle other than electrons as well.
+  //if (track->GetTrackID() != 1 || track->GetParticleDefinition()->GetPDGEncoding() != 11)
+  if (track->GetTrackID() != 1) { return false; }
 
   //-------------------
 
