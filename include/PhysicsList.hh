@@ -74,8 +74,9 @@ class PhysicsList : public G4VModularPhysicsList
   private:
     std::unique_ptr<G4VPhysicsConstructor> fEmDNAPhysicsList;
     std::unique_ptr<G4VPhysicsConstructor> fEmDNAChemistryList;
-    G4String fPhysDNAName;
-    G4bool fMIoni;
+    G4String fPhysDNAName{""};
+    G4String fChemDNAName{""};
+    G4bool fMIoni{false};
     PhysicsListMessenger* pMessenger;
 };
 
@@ -83,6 +84,7 @@ class PhysicsList : public G4VModularPhysicsList
 inline void PhysicsList::SetMultipleIonisation(G4bool in)
 {
   fMIoni = in;
+  if (fMIoni) { RegisterConstructor(fChemDNAName); } // reset chemistry list
 }
 
 //==============================================================================
@@ -114,7 +116,7 @@ public:
 
 private:
   PhysicsList* plist_{nullptr};
-  G4UIcmdWithABool   *mioni_cmd_{nullptr};
+  G4UIcmdWithABool* mioni_cmd_{nullptr};
 };
 
 #endif

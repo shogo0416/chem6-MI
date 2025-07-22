@@ -77,7 +77,6 @@ PhysicsList::PhysicsList()
   SetVerboseLevel(1);
 
   RegisterConstructor("G4EmDNAPhysics_option2");
-//  RegisterConstructor("G4EmDNAPhysics_option8");
   RegisterConstructor("G4EmDNAChemistry_option3");
 }
 
@@ -124,6 +123,7 @@ void PhysicsList::RegisterConstructor(const G4String& name)
   if (verboseLevel > 0) {
     G4cout << "===== Register constructor ==== " << name << G4endl;
   }
+
   if (name == "G4EmDNAPhysics") {
     fEmDNAPhysicsList = std::make_unique<G4EmDNAPhysics>(verboseLevel);
     fPhysDNAName = name;
@@ -161,36 +161,44 @@ void PhysicsList::RegisterConstructor(const G4String& name)
     fPhysDNAName = name;
   }
   else if (name == "G4EmDNAChemistry") {
+    if (fEmDNAChemistryList != nullptr) { fEmDNAChemistryList.reset(); }
     if (fMIoni) {
       fEmDNAChemistryList = std::make_unique<MI::DNAChemistry>();
     } else {
       fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry>();
     }
     fEmDNAChemistryList->SetVerboseLevel(verboseLevel);
+    fChemDNAName = name;
   }
   else if (name == "G4EmDNAChemistry_option1") {
+    if (fEmDNAChemistryList != nullptr) { fEmDNAChemistryList.reset(); }
     if (fMIoni) {
       fEmDNAChemistryList = std::make_unique<MI::DNAChemistryOpt1>();
     } else {
       fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option1>();
     }
     fEmDNAChemistryList->SetVerboseLevel(verboseLevel);
+    fChemDNAName = name;
   }
   else if (name == "G4EmDNAChemistry_option2") {
+    if (fEmDNAChemistryList != nullptr) { fEmDNAChemistryList.reset(); }
     if (fMIoni) {
       fEmDNAChemistryList = std::make_unique<MI::DNAChemistryOpt2>();
     } else {
       fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option2>();
     }
     fEmDNAChemistryList->SetVerboseLevel(verboseLevel);
+    fChemDNAName = name;
   }
   else if (name == "G4EmDNAChemistry_option3") {
+    if (fEmDNAChemistryList != nullptr) { fEmDNAChemistryList.reset(); }
     if (fMIoni) {
       fEmDNAChemistryList = std::make_unique<MI::DNAChemistryOpt3>();
     } else {
       fEmDNAChemistryList = std::make_unique<G4EmDNAChemistry_option3>();
     }
     fEmDNAChemistryList->SetVerboseLevel(verboseLevel);
+    fChemDNAName = name;
   }
   else {
     G4cout << "PhysicsList::RegisterConstructor: <" << name << ">"
