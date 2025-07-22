@@ -78,7 +78,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // World
   //
   //double world_sizeXYZ = 1 * km;
-  double world_sizeXYZ = 100.0 * um; // NOTE(SO): changed water box size
+  double world_sizeXYZ = 1000.0 * um; // NOTE(SO): changed water box size
 
   G4Box* solidWorld =
     new G4Box("World", 0.5 * world_sizeXYZ, 0.5 * world_sizeXYZ, 0.5 * world_sizeXYZ);
